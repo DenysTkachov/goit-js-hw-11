@@ -1,5 +1,4 @@
-import Notiflix from 'notiflix';
-
+import 'notiflix/dist/notiflix-3.2.6.min.css';
 
 const searchForm = document.getElementById('search-form');
 const gallery = document.querySelector('.gallery');
@@ -11,7 +10,7 @@ const perPage = 40; // Кількість зображень на сторінц
 
 // Функція для виконання HTTP-запиту до Pixabay API
 async function fetchImages(query) {
-  const apiKey = 'ВАШ_API_КЛЮЧ';
+  const apiKey = '39742873-b30b3450f220389da52a09ee2';
   const url = `https://pixabay.com/api/?key=${apiKey}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${perPage}`;
 
   try {
@@ -78,3 +77,48 @@ loadMoreBtn.addEventListener('click', async () => {
     updateGallery(images);
   }
 });
+
+function createImageCards(imagesData) {
+  const gallery = document.querySelector('.gallery');
+  gallery.innerHTML = ''; // Очистимо галерею перед додаванням нових карток
+
+  imagesData.forEach(image => {
+    const card = document.createElement('div');
+    card.classList.add('photo-card');
+
+    const img = document.createElement('img');
+    img.src = image.webformatURL; // URL зображення
+    img.alt = image.tags; // Опис зображення
+    img.loading = 'lazy';
+
+    const infoDiv = document.createElement('div');
+    infoDiv.classList.add('info');
+
+    const likes = document.createElement('p');
+    likes.classList.add('info-item');
+    likes.innerHTML = `<b>Likes:</b> ${image.likes}`;
+
+    const views = document.createElement('p');
+    views.classList.add('info-item');
+    views.innerHTML = `<b>Views:</b> ${image.views}`;
+
+    const comments = document.createElement('p');
+    comments.classList.add('info-item');
+    comments.innerHTML = `<b>Comments:</b> ${image.comments}`;
+
+    const downloads = document.createElement('p');
+    downloads.classList.add('info-item');
+    downloads.innerHTML = `<b>Downloads:</b> ${image.downloads}`;
+
+    infoDiv.appendChild(likes);
+    infoDiv.appendChild(views);
+    infoDiv.appendChild(comments);
+    infoDiv.appendChild(downloads);
+
+    card.appendChild(img);
+    card.appendChild(infoDiv);
+
+    gallery.appendChild(card);
+  });
+}
+createImageCards(imagesData);

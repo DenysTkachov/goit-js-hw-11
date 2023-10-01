@@ -29,31 +29,31 @@
 
 
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-/* Стилі для карток зображень */
 .photo-card {
   background-color: #fff;
   border: 1px solid #ddd;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease-in-out;
 }
 
 .photo-card:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .photo-card img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
   display: block;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-radius: 5px 5px 0 0;
 }
 
 .info {
@@ -62,6 +62,12 @@
 
 .info-item {
   margin: 0;
-  padding: 5px 0;
   font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.info-item b {
+  font-weight: bold;
+  color: #555;
 }

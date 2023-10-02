@@ -1,11 +1,8 @@
 import axios from 'axios';
 import Notiflix from 'notiflix';
 
-const form = document.getElementById('search-form');
-const gallery = document.getElementById('gallery');
-const loadMoreBtn = document.getElementById('load-more');
-
-loadMoreBtn.style.display = 'none';
+import refs from './js/refs'
+const { form, gallery, loadMoreBtn} = refs;
 
 const API_KEY = '39742873-b30b3450f220389da52a09ee2';
 const BASE_URL = 'https://pixabay.com/api/';
@@ -49,7 +46,12 @@ async function fetchImages() {
     } else {
       appendImagesToGallery(data);
       page += 1;
-      loadMoreBtn.style.display = 'block'; // Показуємо кнопку, коли є результати пошуку
+
+      if (data.length < PER_PAGE) {
+        loadMoreBtn.style.display = 'none';
+      } else {
+        loadMoreBtn.style.display = 'block';
+      }
     }
   } catch (error) {
     console.error(error);
@@ -62,12 +64,12 @@ async function fetchImages() {
 }
 
 function appendImagesToGallery(images) {
-  const markup = images.map(image => createImageCard(image)).join('');
-  gallery.insertAdjacentHTML('beforeend', markup);
-}
+    const markup = images.map(image => createImageCard(image)).join('');
+    gallery.insertAdjacentHTML('beforeend', markup);
+  }
 
-function createImageCard(image) {
-  return `
+  function createImageCard(image) {
+    return `
     <div class="photo-card">
       <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy">
       <div class="info">
@@ -78,8 +80,8 @@ function createImageCard(image) {
       </div>
     </div>
   `;
-}
+  }
 
-function clearGallery() {
-  gallery.innerHTML = '';
-}
+  function clearGallery() {
+    gallery.innerHTML = '';
+  }
